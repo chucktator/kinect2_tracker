@@ -125,7 +125,7 @@ struct DataType< ::skeleton_tracker::user_IDs_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "skeleton_tracker/user_IDs";
+    return "kinect2_tracker/user_IDs";
   }
 
   static const char* value(const ::skeleton_tracker::user_IDs_<ContainerAllocator>&) { return value(); }

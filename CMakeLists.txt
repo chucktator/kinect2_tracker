@@ -27,9 +27,10 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   tf_conversions
   std_msgs
+  message_generation
 )
 
-find_package(Eigen REQUIRED)
+find_package(Eigen3 REQUIRED)
 find_package(cmake_modules REQUIRED)
 
 link_directories(
@@ -51,7 +52,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES kinect2_tracker
-  CATKIN_DEPENDS cv_bridge geometry_msgs image_transport kdl_conversions roscpp roslib tf tf_conversions
+  CATKIN_DEPENDS cv_bridge geometry_msgs image_transport kdl_conversions roscpp roslib tf tf_conversions message_runtime
   DEPENDS Eigen
 )
 
@@ -77,12 +78,13 @@ include_directories(
 ## either from message generation or dynamic reconfigure
 # add_dependencies(kinect2_tracker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-set(NITE2_DIR ~/NiTE-Linux-x64-2.2/)
-set(NITE2_LIB ~//NiTE-Linux-x64-2.2/Redist/libNiTE2.so)
+set(NITE2_DIR ~/dev/NiTE-Linux-x64-2.2/)
+set(NITE2_LIB ~/dev/NiTE-Linux-x64-2.2/Redist/libNiTE2.so)
 include_directories(./include/Openni2/)
 include_directories(${NITE2_DIR}/Include)
 include_directories(./include)
 include_directories(${OpenCV_INCLUDE_DIRS}/include)
 
 add_executable(kinect2_tracker_node src/kinect2_tracker_node.cpp)
+add_dependencies(kinect2_tracker_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(kinect2_tracker_node OpenNI2 ${NITE2_LIB}  ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
